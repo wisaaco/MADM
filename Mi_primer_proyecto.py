@@ -1,8 +1,5 @@
 
 
-#get_ipython().system('pip install palmerpenguins')
-
-
 
 import pandas as pd
 from palmerpenguins import load_penguins

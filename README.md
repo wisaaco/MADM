@@ -5,6 +5,7 @@
 #### Librerias e instalación
 
 ```python
+pip install pandas
 pip install palmerpenguins
 import pandas as pd
 from palmerpenguins import load_penguins
@@ -54,7 +55,7 @@ no queda ninguno:
 penguins = penguins.dropna()
 print(penguins)
 
-#Elimino aquellas filas donde se encuentre un NaN y lo guardo dentro de la misma variable para trabajar con ella
+# Elimino aquellas filas donde se encuentre un NaN y lo guardo dentro de la misma variable para trabajar con ella
 
        species     island  bill_length_mm  ...  body_mass_g     sex  year
 0       Adelie  Torgersen            39.1  ...       3750.0    male  2007
@@ -75,7 +76,7 @@ print(penguins)
 
 ```python
 print(penguins.isna().any()) 
-#para verificar si existe algún nan utilizo la funcion isna() la cual demuestra que no hay datos NANs
+# Para verificar si existe algún nan utilizo la funcion isna() la cual demuestra que no hay datos NANs
 
 species              False
 island               False
@@ -92,7 +93,7 @@ dtype: bool
 ```python
 individuos_por_sexo = penguins["sex"].value_counts()
 print(individuos_por_sexo)
-#El conteo de la variable sex me muestra que existe un total de 168 machos y 165 hembras en mi muestra
+# El conteo de la variable sex me muestra que existe un total de 168 machos y 165 hembras en mi muestra
 
 male      168
 female    165
@@ -117,10 +118,13 @@ Name: bill_length_mm, dtype: float64
 posición. Verifica que es correcto.
 
 ```python
-bill_area = penguins["bill_length_mm"]*penguins["bill_depth_mm"] #creo una nueva columna con el valor solicitado
-penguins["bill_area"] = bill_area #Agrego la columna a mi dataframe
+# Creo una nueva columna con el valor solicitado
+# El área de un rectangulo se calcula multiplicando la base x altura, en este caso bill_length x bill_depth
+bill_area = penguins["bill_length_mm"]*penguins["bill_depth_mm"] 
+# Agrego la columna a mi dataframe
+penguins["bill_area"] = bill_area 
 print(penguins)
-#El área de un rectangulo se calcula multiplicando la base x altura, en este caso bill_length x bill_depth
+
 
        species     island  bill_length_mm  ...     sex  year  bill_area
 0       Adelie  Torgersen            39.1  ...    male  2007     731.17
@@ -139,23 +143,25 @@ print(penguins)
 ```
 
 ```python
-#Para verificar que el resultado de mi nueva columna es correcto, lo verifico haciendo el calculo manual del primer dato
-#y verifico que corresponda con mi primer resultado.
+# Para verificar que el resultado de mi nueva columna es correcto, lo verifico haciendo el calculo manual del primer dato
+# Y verifico que corresponda con mi primer resultado.
 comprobacion = penguins["bill_length_mm"][0]*penguins["bill_depth_mm"][0]
-print(penguins["bill_area"][0] == comprobacion) #El valor calculado manualmente es correcto ya que corresponde con el primer
-#valor de la columna bill_area 
-
-True
+# El valor calculado manualmente es correcto ya que corresponde con el primer valor de la columna bill_area 
+print(penguins["bill_area"][0] == comprobacion) 
+comprobacion = True
 ```
 5. Hagamos algo un poco más elaborado, vamos a realizar una agrupación en función del sexo y de la especie de cada 
 observación. Queremos obtener solamente la información referente al sexo Femenino.
 
 ```python
-#para sacar la longitud media del pico por sexo primero aplico la funcion groupby y me quedo con los datos de "female"
-por_sexo = penguins.groupby('sex') #Agrupo
-females = penguins.loc[por_sexo.groups['female'].values] #filtro datos "female"
-mean_bill_fem = females.groupby(["species"]).aggregate({"bill_length_mm":np.mean}) #por ultimo vuelvo a agrupar por especie con la 
-#funcion group by, la cual me devolverá la longitud media del pico de cada especie de hembras.
+# Para sacar la longitud media del pico por sexo primero aplico la funcion groupby y me quedo con los datos de "female"
+# Agrupo
+por_sexo = penguins.groupby('sex') 
+# Filtro datos "female"
+females = penguins.loc[por_sexo.groups['female'].values] 
+# Por ultimo vuelvo a agrupar por especie con la 
+mean_bill_fem = females.groupby(["species"]).aggregate({"bill_length_mm":np.mean}) 
+# Funcion group by, la cual me devolverá la longitud media del pico de cada especie de hembras.
 print(mean_bill_fem)
 
            bill_length_mm
@@ -168,10 +174,12 @@ Gentoo          45.563793
 columna llamada body_mass_kg y eliminaremos body_mass_g.
 
 ```python
-#primero realizo la conversion de gr a kg dividiendo los gr en 1000
+# Primero realizo la conversion de gr a kg dividiendo los gr en 1000
 body_mass_kg = penguins["body_mass_g"] / 1000
-penguins["body_mass_kg "] = body_mass_kg #agrego a la nueva columna llamada 'body_mass_kr'
-tabla_final = penguins.drop(columns=["body_mass_g"]) #finalmente elimino la golumna 'body_mass_g'
+# Agrego a la nueva columna llamada 'body_mass_kr'
+penguins["body_mass_kg "] = body_mass_kg 
+# Finalmente elimino la golumna 'body_mass_g'
+tabla_final = penguins.drop(columns=["body_mass_g"]) 
 print(tabla_final)
 
        species     island  bill_length_mm  ...  year  bill_area body_mass_kg 
@@ -189,7 +197,6 @@ print(tabla_final)
 
 [333 rows x 9 columns]
 
-Process finished with exit code 0
 ```
 
 
