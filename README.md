@@ -18,6 +18,7 @@ Mira el tipo de datos de cada una de sus columnas.
 ```python
 penguins = load_penguins()
 penguins.head()
+
        species     island  bill_length_mm  ...  body_mass_g     sex  year
 0       Adelie  Torgersen            39.1  ...       3750.0    male  2007
 1       Adelie  Torgersen            39.5  ...       3800.0  female  2007
@@ -36,7 +37,7 @@ penguins.head()
 
 ```python
 totales = penguins.count()
-totales
+print(totales)
 
 species              344
 island               344
@@ -124,7 +125,6 @@ bill_area = penguins["bill_length_mm"]*penguins["bill_depth_mm"]
 # Agrego la columna a mi dataframe
 penguins["bill_area"] = bill_area 
 print(penguins)
-
 
        species     island  bill_length_mm  ...     sex  year  bill_area
 0       Adelie  Torgersen            39.1  ...    male  2007     731.17
