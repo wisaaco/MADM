@@ -12,7 +12,7 @@ from palmerpenguins import load_penguins
 # Mira el tipo de datos de cada una de sus columnas.
 
 penguins = load_penguins()
-penguins.head()
+print(penguins)
 
 totales = penguins.count()
 print(totales)
@@ -28,12 +28,13 @@ print(penguins.isna().any())
 
 
 # 3. ¿Cuántos individuos hay de cada sexo? Puedes obtener la longitud media del pico según el sexo:
-penguins["sex"].value_counts()
+individuos_por_sexo = penguins["sex"].value_counts()
+print(individuos_por_sexo)
 #El conteo de la variable sex me muestra que existe un total de 168 machos y 165 hembras en mi muestra
 
 import numpy as np #Importo nueva libreria
 media_picos = penguins.groupby(['sex',"species"])["bill_length_mm"].mean()
-media_picos
+print(media_picos)
 
 
 # 4. Vamos a añadir una columna, vamos a realizar una estimación (muy grosera) del área del pico de los pingüinos 
@@ -42,13 +43,13 @@ media_picos
 
 bill_area = penguins["bill_length_mm"]*penguins["bill_depth_mm"] #creo una nueva columna con el valor solicitado
 penguins["bill_area"] = bill_area #Agrego la columna a mi dataframe
-penguins
+print(penguins)
 #El área de un rectangulo se calcula multiplicando la base x altura, en este caso bill_length x bill_depth
 
 #Para verificar que el resultado de mi nueva columna es correcto, lo verifico haciendo el calculo manual del primer dato
 #y verifico que corresponda con mi primer resultado.
 comprobacion = penguins["bill_length_mm"][0]*penguins["bill_depth_mm"][0]
-penguins["bill_area"][0] == comprobacion #El valor calculado manualmente es correcto ya que corresponde con el primer 
+print(penguins["bill_area"][0] == comprobacion) #El valor calculado manualmente es correcto ya que corresponde con el primer
 #valor de la columna bill_area 
 
 
@@ -60,14 +61,15 @@ por_sexo = penguins.groupby('sex') #Agrupo
 females = penguins.loc[por_sexo.groups['female'].values] #filtro datos "female"
 mean_bill_fem = females.groupby(["species"]).aggregate({"bill_length_mm":np.mean}) #por ultimo vuelvo a agrupar por especie con la 
 #funcion group by, la cual me devolverá la longitud media del pico de cada especie de hembras.
-mean_bill_fem
+print(mean_bill_fem)
 
 
 # 6. Como ya sabemos, la variable peso, se encuentra en gramos, la pasaremos a kg. Para ello crearemos una nueva 
 # columna llamada body_mass_kg y eliminaremos body_mass_g.
 
+#primero realizo la conversion de gr a kg dividiendo los gr en 1000
 body_mass_kg = penguins["body_mass_g"] / 1000
-penguins["body_mass_kg "] = body_mass_kg 
-tabla_final = penguins.drop(columns=["body_mass_g"])
-tabla_final
+penguins["body_mass_kg "] = body_mass_kg #agrego a la nueva columna llamada 'body_mass_kr'
+tabla_final = penguins.drop(columns=["body_mass_g"]) #finalmente elimino la golumna 'body_mass_g'
+print(tabla_final)
 
