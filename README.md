@@ -1,4 +1,4 @@
-### Brenda Estefanía Estrada López
+### Brenda Estefanía Estrada López (Recuerda que es un repositorio público, evitaría poner nombres, tokens, passwords, etc.
 ### Tecnologías para Análisis de Datos Masivos 
 
 
